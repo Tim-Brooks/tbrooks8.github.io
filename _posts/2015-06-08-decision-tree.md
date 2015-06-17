@@ -1,5 +1,6 @@
 ---
 title: Creating an Efficient Decision Tree in Java
+date:   2015-06-08 12:00:00
 layout: post
 ---
 
