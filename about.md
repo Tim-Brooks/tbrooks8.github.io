@@ -4,8 +4,10 @@ title: About
 permalink: /about/
 ---
 
-This is the base Jekyll theme. You can find out more info about customizing your Jekyll theme, as well as basic Jekyll usage documentation at [jekyllrb.com](http://jekyllrb.com/)
+I'm Tim Brooks, a software engineer currently employed at [Staples SparX](http://www.staples-sparx.com/).
 
-You can find the source code for the Jekyll new theme at: [github.com/jglovier/jekyll-new](https://github.com/jglovier/jekyll-new)
+I am adept at most JVM languages, particularly Clojure, Scala, and Java. I also have a lot of experience with Python, Javascript, and SQL. I enjoy working on problems related to concurrency, high performance computation, and distributed systems. 
 
-You can find the source code for Jekyll at [github.com/jekyll/jekyll](https://github.com/jekyll/jekyll)
+At SparX I write soft-realtime machine learning web services. And the infrastructure to support those services.
+
+I am the author of the [Fault](https://github.com/tbrooks8/fault), [Nano](https://github.com/staples-sparx/Nano), and [Sequoia](https://github.com/staples-sparx/Sequoia) libraries. And a contributor to [core.matrix](https://github.com/mikera/core.matrix) and [Apache Kafka](http://kafka.apache.org/).
