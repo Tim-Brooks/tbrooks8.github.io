@@ -10,7 +10,7 @@ Written by [Tim Brooks](http://www.uncontended.net)
 
 ### Background
 
-At Staples SparX we often deal with two major challenges. We want to create highly accurate data models based on the insights gleaned from machine learning. And we want to be able to evaluate these models efficiently at runtime. Currently we observe a 10 millisecond timeout when calling our modeling web service.
+At [Staples SparX](http://www.staples-sparx.com) we often deal with two major challenges. We want to create highly accurate data models based on the insights gleaned from machine learning. And we want to be able to evaluate these models efficiently at runtime. Currently we observe a 10 millisecond timeout when calling our modeling web service.
 
 In order to make the most accurate predictions possible, our data scientists experiment with a number of different modeling techniques. Some of them (ex: linear or logistic regression) are quite computationally cheap to score. Additionally, models such as those have a number of rich, native libraries that can be used to achieve impressive speedups. Particularly if the nature of the algorithm allows vectorization.
 
