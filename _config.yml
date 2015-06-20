@@ -1,5 +1,6 @@
 # Site settings
-title: Tim Brooks
+title: Uncontended
+name: Tim Brooks
 email: tim@uncontended.net
 description: > # this means to ignore newlines until "baseurl:"
   I'm Tim Brooks: A software engineer, replacement level data scientist,
