@@ -1,12 +1,11 @@
 ---
 title: Creating an Efficient Decision Tree in Java
-date:   2015-06-08 12:00:00
+date: 2015-06-08 12:00:00
 layout: post
+author: Tim Brooks
 ---
 
 ## Creating an Efficient Decision Tree in Java
-
-Written by [Tim Brooks](http://www.uncontended.net)
 
 ### Background
 
