@@ -62,7 +62,7 @@ Finally, this situation may be exacerbated if there has not been a request in a 
 
 This tradeoff is clearly an edge case. And probably hardly ever matters (especially since it seems like Netflix has great success running Hystrix in production). But it still is not ideal.
 
-### Multi-writer Solution for Precipice
+### Multi-writer Variant for Precipice
 
 As I was messing around trying to convert my single-writer code to support multi-writers, I realized that each additional piece of atomic state made the state machine more difficult to create.
 
