@@ -5,15 +5,15 @@ layout: post
 author: Tim Brooks
 ---
 
-Modern software systems are often composed of multiple independently operating components. It has become common to split monolith services into microservices that live in different processes, containers, machines, or even different machines spread across datacenters. Failure of individual components from time to time is all but guaranteed. Consistent uptime for the system as a whole depends on an application design that is resilient to these failures. 
+Modern software systems are often composed of multiple independently operating components. It has become common to split monolith services into microservices that live in different processes, containers, machines, or even different datacenters. Failure of individual components from time to time is all but guaranteed. Consistent uptime for the system as a whole depends on an application design that is resilient to these failures. 
 
 [Precipice](https://github.com/tbrooks8/Precipice) is a library designed to provide the building blocks for improving system resiliency. It offers composable metrics and back pressure mechanisms for isolating and handling failure of individual tasks of execution. Additionally, it offers tools for developing patterns of execution.
 
-There are a number of other libraries in the Java ecosystem that are designed to provide system resiliency. Precipice tends to be lower level than some of these alternatives. Precipice does impose any execution model upon you. It is not strictly coupled to threadpools, actors, communicating sequential processes, or any other concurrency model. Instead, Precipice is designed to be able to be used in conjuction with or as a part of one of these higher level libraries.
+There are a number of other libraries in the Java ecosystem which are designed to provide system resiliency. Precipice tends to be lower level than some of these alternatives. Precipice does impose any execution model upon you. It is not strictly coupled to threadpools, actors, communicating sequential processes, or any other concurrency model. Instead, Precipice is designed to be able to be used in conjuction with--or as a part of--one of these higher level libraries.
 
 The basic abstraction provided by Precipice is the [GuardRail](https://github.com/tbrooks8/Precipice/blob/master/precipice-core/src/main/java/net/uncontended/precipice/GuardRail.java). A GuardRail isolates the execution of tasks have have failure conditions.
 
-A GuardRail is parameterized by two different enum types. A type defining the possible outcomes of execution. And a type defining reasons why a task might be rejected.
+A GuardRail is parameterized by two different enum types. One type defining the possible outcomes of execution. And another type defining reasons why a task might be rejected.
 
 Additionally, it has five main attributes.
 1. Name - used for identification purposes.
@@ -29,7 +29,7 @@ A GuardRail can be constructed using the builder.
 
 A GuardRail has semantics similar to a [semaphore](https://en.wikipedia.org/wiki/Semaphore_(programming)). When you are interested in accessing the code path isolated by the GuardRail, you must request permits. At this point, the GuardRail will consult with the provided back pressure mechanisms to determine whether the permits can be acquired or if the access must be rejected. If the access is rejected, the rejection metrics will be updated.
 
-When permits are successfully acquired, the system can safely proceed with execution. Upon completion, the permits must be released. This can be done manually or there are a number of contexts that Precipice provides to release permits automatically. The act of releasing the permits updates the result metrics and latency metrics (if present). It also informs backpressure mechanisms that the permits have been released.
+When permits are successfully acquired, the system can safely proceed with execution. Upon completion, the permits must be released. This can be done manually, or there are a number of contexts which Precipice provides to release permits automatically. The act of releasing the permits updates the result metrics and latency metrics (if present). It also informs backpressure mechanisms that the permits have been released.
 
 {% gist 9c29d906f0bf7a75b713 %}
 
@@ -37,7 +37,7 @@ As mentioned, there are a number of completable contexts that will make this pro
 
 {% gist 1e8f72a9f259f4575e28 %}
 
-In the example above, the completable can only be written to by a single thread. Precipice provides a threadsafe version for usage accross thread boundaries.
+In the example above, the completable can only be written to by a single thread. Precipice provides a threadsafe [version](link) for usage across thread boundaries.
 
 ## Integrating specialized execution models
 
@@ -45,7 +45,7 @@ Often Precipice users may be interested in integrating a GuardRail with speciali
 
 {% gist fb63a62141c8545b6136 %}
 
-All this interface indicates is that the implementing class has a GuardRail. The actual acquiring and releasing of permits and executing of tasks must be implemented.
+This interface merely indicates is that the implementing class has a GuardRail. The actual acquiring and releasing of permits and executing of tasks must be implemented.
 
 There a couple of provided examples for how this can be done:
 
@@ -55,12 +55,12 @@ There a couple of provided examples for how this can be done:
 
 In the third example, demonstrates two interesting things that the design of Precipice allows.
 
-1. By isolating on the specific endpoint behind the GuardRail, you can still share a single [Netty](http://netty.io/) http client for maximum efficiency. Under the hood a single event loop group can handle all your IO. This is allow by the fact that Precipice does not mandate an specific threading model.
+1. By isolating one specific endpoint behind the GuardRail, you can still share a single [Netty](http://netty.io/) http client between multiple HttpAsyncService for maximum efficiency. Under the hood a single event loop group can handle all of your IO. This is possible due to the fact that Precipice does not mandate an specific threading model.
 2. Passing RequestBuilder opposed to a fully build [Request](https://github.com/AsyncHttpClient/async-http-client/blob/master/client/src/main/java/org/asynchttpclient/Request.java) allows you to utilize a Pattern to submit the request to different endpoints.
 
 ## Precipice Patterns
 
-Highly available systems often mandate some degree of redundency. Precipice provides a number of tools to build patterns to be utilize these redundent services.
+Highly available systems often mandate some degree of redundancy. Precipice provides a number of tools to build patterns to utilize these redundant services.
 
 When you construct a [Pattern](https://github.com/tbrooks8/Precipice/blob/master/precipice-core/src/main/java/net/uncontended/precipice/pattern/Pattern.java) you provide a collection Precipice implementations and a [PatternStrategy](https://github.com/tbrooks8/Precipice/blob/master/precipice-core/src/main/java/net/uncontended/precipice/pattern/PatternStrategy.java). You can call the getPrecipices(int permits) to return a sequence of precipices for which permits could be acquired.
 
@@ -100,7 +100,7 @@ There is a [Simulation](https://github.com/tbrooks8/Precipice/blob/master/precip
 
 ### Timeout Service
 
-There is are some [facilities](https://github.com/tbrooks8/Precipice/tree/master/precipice-core/src/main/java/net/uncontended/precipice/timeout) to schedule timeouts for you tasks. Currently this is based on a DelayQueue strategy. However, as some point in the future there will be [timer wheel](http://netty.io/4.0/api/io/netty/util/HashedWheelTimer.html) based strategy.
+There are some [facilities](https://github.com/tbrooks8/Precipice/tree/master/precipice-core/src/main/java/net/uncontended/precipice/timeout) to schedule timeouts for you tasks. Currently this is based on a DelayQueue strategy. However, in the future there will be [timer wheel](http://netty.io/4.0/api/io/netty/util/HashedWheelTimer.html) based strategy.
 
 ## Stability
 
