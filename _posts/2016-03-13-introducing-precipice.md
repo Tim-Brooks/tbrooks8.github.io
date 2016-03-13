@@ -84,18 +84,7 @@ There are currently three provided mechanisms of backpressure.
 
 Users can also implement their own mechanisms of back pressure using the [BackPressure](https://github.com/tbrooks8/Precipice/blob/master/precipice-core/src/main/java/net/uncontended/precipice/BackPressure.java) interface.
 
-```
-public interface BackPressure<Rejected extends Enum<Rejected>> {
-
-  Rejected acquirePermit(long number, long nanoTime);
-
-  void releasePermit(long number, long nanoTime);
-  
-  void releasePermit(long number, Failable result, long nanoTime);
-  
-  <Result extends Enum<Result> & Failable> void registerGuardRail(GuardRail<Result, Rejected> guardRail);
-}
-```
+{% gist 6a7a2980be8da110a941 %}
 
 ## And More
 
