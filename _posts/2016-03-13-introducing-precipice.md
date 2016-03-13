@@ -9,11 +9,11 @@ Modern software systems are often composed of multiple independently operating c
 
 [Precipice](https://github.com/tbrooks8/Precipice) is a library designed to provide the building blocks for improving system resiliency. It offers composable metrics and back pressure mechanisms for isolating and handling failure of individual tasks of execution. Additionally, it offers tools for developing patterns of execution.
 
-There are a number of other libraries in the Java ecosystem which are designed to provide system resiliency. Precipice tends to be lower level than some of these alternatives. Precipice does impose any execution model upon you. It is not strictly coupled to threadpools, actors, communicating sequential processes, or any other concurrency model. Instead, Precipice is designed to be able to be used in conjuction with--or as a part of--one of these higher level libraries.
+There are a number of other libraries in the Java ecosystem which are designed to provide system resiliency. Precipice tends to be lower level than some of these alternatives. Precipice does impose any execution model upon your application. It is not strictly coupled to threadpools, actors, communicating sequential processes, or any other concurrency model. Instead, Precipice is designed to be able to be used in conjuction with--or as a part of--one of these higher level libraries.
 
-The basic abstraction provided by Precipice is the [GuardRail](https://github.com/tbrooks8/Precipice/blob/master/precipice-core/src/main/java/net/uncontended/precipice/GuardRail.java). A GuardRail isolates the execution of tasks have have failure conditions.
+The basic abstraction provided by Precipice is the [GuardRail](https://github.com/tbrooks8/Precipice/blob/master/precipice-core/src/main/java/net/uncontended/precipice/GuardRail.java). A GuardRail isolates the execution of tasks have failure conditions.
 
-A GuardRail is parameterized by two different enum types. One type defining the possible outcomes of execution. And another type defining reasons why a task might be rejected.
+A GuardRail is parameterized by two different enum types. One type defining the possible outcomes of execution. And another type defining reasons why execution might be rejected.
 
 Additionally, it has five main attributes.
 1. Name - used for identification purposes.
@@ -96,7 +96,7 @@ As (briefly) mentioned above, there is a Precipice [implementation](https://gith
 
 ### Configurable Metrics
 
-There are multiple provided metric options provided. Some just keep total counts for the entire application lifetime. Others are rolling, so you can query the metrics for specific time periods. I am also working on others that are only written to by a background thread. This would be a specialized case for users that demand low latency on permit acquisition.
+There are multiple metric options provided. Some keep total counts for the entire application lifetime. Others are rolling, so you can query the metrics for specific time periods. I am also working on others that are only written to by a background thread. This would be a specialized case for users that demand low latency on permit acquisition.
 
 ### Simulation Tests
 
