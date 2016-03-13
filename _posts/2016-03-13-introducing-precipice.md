@@ -37,9 +37,9 @@ As mentioned, there are a number of completable contexts that will make this pro
 
 {% gist 1e8f72a9f259f4575e28 %}
 
-In the example above, the completable can only be written to by a single thread. Precipice provides a threadsafe [version](link) for usage across thread boundaries.
+In the example above, the completable can only be written to by a single thread. Precipice provides a threadsafe [Eventual](https://github.com/tbrooks8/Precipice/blob/master/precipice-core/src/main/java/net/uncontended/precipice/concurrent/Eventual.java) for usage across thread boundaries. The threadsafe version can be constructed using the [Asynchronous](https://github.com/tbrooks8/Precipice/blob/master/precipice-core/src/main/java/net/uncontended/precipice/factories/Asynchronous.java) factory.
 
-## Integrating specialized execution models
+## Integrating Specialized Execution Models
 
 Often Precipice users may be interested in integrating a GuardRail with specialized execution logic opposed to using GuardRails in the adhoc method shown in the example above. For the former case, the namesake [Precipice](https://github.com/tbrooks8/Precipice/blob/master/precipice-core/src/main/java/net/uncontended/precipice/Precipice.java) interface can be implemented.
 
@@ -86,9 +86,13 @@ Users can also implement their own mechanisms of back pressure using the [BackPr
 
 {% gist 6a7a2980be8da110a941 %}
 
-## And More
+## Other Features
 
-Precipice is designed for maximum flexibility.
+### ThreadPoolService
+
+As (briefly) mentioned above, there is a Precipice [implementation](https://github.com/tbrooks8/Precipice/blob/master/precipice-threadpool/src/main/java/net/uncontended/precipice/threadpool/ThreadPoolService.java) that isolates callable execution behind a GuardRail and on a threadpool. Out of the box, this should work for many different use cases.
+
+{% gist b29c424b60d5cbc02964 %}
 
 ### Configurable Metrics
 
@@ -96,11 +100,21 @@ There are multiple provided metric options provided. Some just keep total counts
 
 ### Simulation Tests
 
-There is a [Simulation](https://github.com/tbrooks8/Precipice/blob/master/precipice-core/src/main/java/net/uncontended/precipice/util/Simulation.java) class that provides basic simulation tests for user Precipice implementations. An example of these tests in use is in the [threadpool module](https://github.com/tbrooks8/Precipice/blob/master/precipice-threadpool/src/test/java/net/uncontended/precipice/threadpool/ThreadPoolServiceTest.java#L179).
+There is a [Simulation](https://github.com/tbrooks8/Precipice/blob/master/precipice-core/src/main/java/net/uncontended/precipice/util/Simulation.java) class that provides basic simulation tests for user Precipice implementations. An example of these tests in use can be found in the [threadpool module](https://github.com/tbrooks8/Precipice/blob/master/precipice-threadpool/src/test/java/net/uncontended/precipice/threadpool/ThreadPoolServiceTest.java#L179).
 
-### Timeout Service
+### TimeoutService
 
-There are some [facilities](https://github.com/tbrooks8/Precipice/tree/master/precipice-core/src/main/java/net/uncontended/precipice/timeout) to schedule timeouts for you tasks. Currently this is based on a DelayQueue strategy. However, in the future there will be [timer wheel](http://netty.io/4.0/api/io/netty/util/HashedWheelTimer.html) based strategy.
+There are some [facilities](https://github.com/tbrooks8/Precipice/tree/master/precipice-core/src/main/java/net/uncontended/precipice/timeout) to schedule timeouts for your tasks. Currently this is based on a DelayQueue strategy. However, in the future there will be [timer wheel](http://netty.io/4.0/api/io/netty/util/HashedWheelTimer.html) based strategy.
+
+### An Emphasis on Performance
+
+Precipice was design with performance in mind. I am still in the process of optimizing it. However, right now it should easily meet most user's needs.
+
+There is no locking (or synchronized) on permit acquisition or release. All of the provided metrics and circuit breakers are updated and read in a lock-free manner. 
+
+Everywhere nano time is used there is a method arity to pass in the nano time. Essentially for task execution there should only be one call to System.nanoTime() on acquisition and one call on release.
+
+I am also working on variants of the [different](https://github.com/tbrooks8/Precipice/blob/master/precipice-core/src/main/java/net/uncontended/precipice/metrics/experimental/SWCountMetrics.java) [components](https://github.com/tbrooks8/Precipice/blob/master/precipice-core/src/main/java/net/uncontended/precipice/circuit/SWCircuitBreaker.java) that can be written to by background threads. This would allow many of the volatile reads and writes to be removed from the acquisition and release calls.
 
 ## Stability
 
