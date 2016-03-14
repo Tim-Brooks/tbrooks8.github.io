@@ -112,7 +112,7 @@ There is a [Simulation](https://github.com/tbrooks8/Precipice/blob/master/precip
 
 ### TimeoutService
 
-There are some [facilities](https://github.com/tbrooks8/Precipice/tree/master/precipice-core/src/main/java/net/uncontended/precipice/timeout) to schedule timeouts for your tasks. Currently this is based on a [DelayQueue](https://docs.oracle.com/javase/7/docs/api/java/util/concurrent/DelayQueue.html) strategy. However, in the future there will be [timer wheel](http://netty.io/4.0/api/io/netty/util/HashedWheelTimer.html) based strategy.
+There are some [facilities](https://github.com/tbrooks8/Precipice/tree/master/precipice-core/src/main/java/net/uncontended/precipice/timeout) to schedule timeouts for your tasks. Currently this is based on a [DelayQueue](https://docs.oracle.com/javase/7/docs/api/java/util/concurrent/DelayQueue.html) strategy. However, in the future there will be a [timer wheel](http://netty.io/4.0/api/io/netty/util/HashedWheelTimer.html) based strategy.
 
 ### An Emphasis on Performance
 
