@@ -1,5 +1,5 @@
 ---
-title: Introducing Precipice - A Java Library for Isolating and Monitoring Task Execution
+title: Precipice - A Java Library for Isolating and Monitoring Task Execution
 date: 2016-03-13 12:00:00
 layout: post
 author: Tim Brooks
