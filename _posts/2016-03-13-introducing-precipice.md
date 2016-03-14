@@ -17,7 +17,8 @@ The basic abstraction provided by Precipice is the [GuardRail](https://github.co
 
 A GuardRail is parameterized by two different enum types. One type defining the possible outcomes of execution. And another type defining reasons why execution might be rejected.
 
-Additionally, it has five main attributes.
+Additionally, it has five main attributes:
+
 1. Name - used for identification purposes.
 2. Result metrics - counts of the different task execution results.
 3. Rejection Metrics- counts of the different execution rejection reasons.
@@ -25,6 +26,7 @@ Additionally, it has five main attributes.
 5. Zero or more back pressure mechanisms informed by these metrics.
 
 A GuardRail can be constructed using the builder.
+
 {% gist 7629496020911d2d1d8a %}
 
 ## Using a GuardRail
